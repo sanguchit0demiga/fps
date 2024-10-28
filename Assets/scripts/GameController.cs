@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
     void Start()
     {
         totalEnemies = FindObjectsOfType<Enemy>().Length;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -23,9 +25,13 @@ public class GameController : MonoBehaviour
     void GanarJuego()
     {
         SceneManager.LoadScene(2);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     public void PlayerDefeated()
     {
         SceneManager.LoadScene(3);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
