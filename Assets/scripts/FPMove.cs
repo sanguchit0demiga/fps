@@ -9,14 +9,16 @@ public class FPMove : MonoBehaviour
     private Rigidbody rb;
     public int health = 3;  
     public Barradevida barraVida;  
-    public Score sumarScore;  
+    public Score sumarScore;
+    private GameController gameController;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+        gameController = FindObjectOfType<GameController>();
 
-    
+
         if (barraVida != null)
         {
             barraVida.vidaMax = health;
@@ -50,7 +52,11 @@ public class FPMove : MonoBehaviour
 
             if (health <= 0)
             {
-                gameObject.SetActive(false); 
+                if (gameController != null)
+                {
+                    gameController.PlayerDefeated();
+                }
+               
             }
         }
     }

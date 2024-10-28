@@ -7,8 +7,10 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     public Score sumarScore;
     public int health = 3;
+    private GameController gameController;
     void Start()
     {
+        gameController = FindObjectOfType<GameController>();
         if (sumarScore == null)
         {
             sumarScore= FindObjectOfType<Score>();
@@ -31,7 +33,8 @@ public class Enemy : MonoBehaviour
     }
     void Die()
     {
-        sumarScore.Contador(1);
+            gameController.EnemyDefeated();
+            sumarScore.Contador(1);
         Destroy(gameObject);
 
     }
