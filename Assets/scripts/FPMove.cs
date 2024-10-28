@@ -1,27 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FPMove : MonoBehaviour
 {
     public float playerSpeed = 2.0f;
-    Rigidbody rb;
-    // Start is called before the first frame update
+    private Rigidbody rb;
+    public int health = 3;  
+    public Barradevida barraVida;  
+    public Score sumarScore;  
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+
+    
+        if (barraVida != null)
+        {
+            barraVida.vidaMax = health;
+            barraVida.vidaActual = health;
+            barraVida.ActualizarBarra();
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        Vector3 moveRelative = transform.TransformDirection(move) * playerSpeed*Time.deltaTime; 
+        Vector3 moveRelative = transform.TransformDirection(move) * playerSpeed * Time.deltaTime;
         rb.MovePosition(rb.position + moveRelative);
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
             Cursor.lockState = CursorLockMode.None;
+        }
     }
-}
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            health--;
+            if (barraVida != null)
+            {
+                barraVida.vidaActual = health;
+                barraVida.ActualizarBarra();
+            }
+
+            if (health <= 0)
+            {
+                gameObject.SetActive(false); 
+            }
+        }
+    }
 }

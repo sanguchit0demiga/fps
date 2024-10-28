@@ -5,29 +5,37 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Score sumarScore;
+    public int health = 3;
     void Start()
     {
-        
-    }
+        if (sumarScore == null)
+        {
+            sumarScore= FindObjectOfType<Score>();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+ 
+   
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
+            health -= 1;
             Destroy(collision.gameObject);
-            Die();
+          if (health <= 0) {
+                Die();
         }
     }
-   void Die () {
-    Destroy(gameObject);
-      
+    void Die()
+    {
+        sumarScore.Contador(1);
+        Destroy(gameObject);
+
     }
 
 }
 
+}
