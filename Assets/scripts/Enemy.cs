@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public ParticleSystem deathParticles;
     // Start is called before the first frame update
     public Score sumarScore;
     public int health = 3;
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
             gameController.EnemyDefeated();
             sumarScore.Contador(1);
         Destroy(gameObject);
+            Instantiate(deathParticles, transform.position, Quaternion.identity);
 
     }
 
